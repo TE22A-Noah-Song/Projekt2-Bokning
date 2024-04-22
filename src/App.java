@@ -89,7 +89,10 @@ public class App {
             }
         }
     
-       
+        //Om bokningen är falskt (inte hittad)
+        if (!BokningHittad)  {
+            System.out.println("Ingen bokning hittades för personnummer " + personnummer);
+        }
         
     }
 
