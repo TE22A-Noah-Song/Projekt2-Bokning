@@ -77,7 +77,20 @@ public class App {
     public static void HittaBokning(int[] platser) {
         //logik för att hitta en bokning här
         Scanner t = new Scanner(System.in);
-        System.out.println("Hittade bokning!");
+        System.out.print("Ange personnummer för att hitta bokning:");
+        int personnummer = t.nextInt();
+        boolean BokningHittad = false; //Bokningen är inte hittat föränns persnr finns i listan
+    
+        for (int i = 0; i < platser.length; i++) {
+            if (platser[i] == personnummer) {
+                System.out.println("Personen med personnummer " + personnummer + " är bokad på plats " + (i + 1));
+                BokningHittad = true;
+                break;
+            }
+        }
+    
+       
+        
     }
 
     public static void AvbokaBokning(int[] platser) {
