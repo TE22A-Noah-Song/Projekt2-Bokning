@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        Scanner t = new Scanner(System.in);
         int[] platser = new int[20];
         int totalPris = 0; // Variabel för att hålla reda på det totala priset
         visaMeny(platser, totalPris);
@@ -58,11 +57,18 @@ public class App {
                 System.out.print("Ange ålder i siffror: ");
                 int ålder = t.nextInt();
 
-                if (ålder < 18) {
+                if (ålder < 18) 
+                {
                     pris = 150;
-                } else if (ålder >= 18) {
+                } 
+                
+                else if (ålder >= 18) 
+                {
                     pris = 300;
-                } else {
+                }
+
+                 else 
+                {
                     System.out.println("Felaktig inmatning! Ange ålder i siffror.");
                 }
                 System.out.println("Pris: " + pris);
@@ -92,13 +98,24 @@ public class App {
         //Om bokningen är falskt (inte hittad)
         if (!BokningHittad)  {
             System.out.println("Ingen bokning hittades för personnummer " + personnummer);
-        }
+        }   
         
     }
 
     public static void AvbokaBokning(int[] platser) {
         //logik för att avboka en bokning här
         Scanner t = new Scanner(System.in);
-        System.out.println("Bokning avbokad!");
+        System.out.print("Ange personnummer för att avboka bokning:");
+        int personnummer = t.nextInt();
+        boolean bokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
+
+        for (int i = 0; i < platser.length; i++) {
+            if (platser[i] == personnummer) { // Om personnumret matchar en bokning
+                platser[i] = 0; // Markera platsen som ledig genom att tilldela 0
+                System.out.println("Bokningen för personnummer " + personnummer + " har avbokats från plats " + (i + 1));
+                bokningHittad = true;
+                break; // Avsluta sökningen när bokningen har avbokats
+            }
+
     }
 }
