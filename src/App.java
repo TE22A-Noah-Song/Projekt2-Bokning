@@ -107,15 +107,19 @@ public class App {
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer för att avboka bokning:");
         int personnummer = t.nextInt();
-        boolean bokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
+        boolean BokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
 
         for (int i = 0; i < platser.length; i++) {
             if (platser[i] == personnummer) { // Om personnumret matchar en bokning
                 platser[i] = 0; // Markera platsen som ledig genom att tilldela 0
                 System.out.println("Bokningen för personnummer " + personnummer + " har avbokats från plats " + (i + 1));
-                bokningHittad = true;
+                BokningHittad = true;
                 break; // Avsluta sökningen när bokningen har avbokats
             }
+        }
 
+        if (!BokningHittad) { // Om ingen bokning hittades för det angivna personnumret
+            System.out.println("Ingen bokning hittades för personnummer " + personnummer);
+        }
     }
 }
