@@ -16,16 +16,16 @@ public class App {
             int val = t.nextInt();
             switch (val) {
                 case 1:
-                    totalPris += BokaPlats(platser);
+                    totalPris += bokaPlats(platser);
                     break;
                 case 2:
-                    HittaBokning(platser);
+                    hittaBokning(platser);
                     break;
                 case 3:
-                    AvbokaBokning(platser);
+                    avbokaBokning(platser);
                     break;
                 case 4:
-                    System.out.println("Det totala priset för bokningarna är: " + totalPris+"kr");
+                    System.out.println("Det totala priset för bokningarna är: " + totalPris + "kr");
                     System.out.println("Tack för besöket!");
                     return;
                 default:
@@ -34,7 +34,7 @@ public class App {
         }
     }
 
-    public static int BokaPlats(int[] platser) {
+    public static int bokaPlats(int[] platser) {
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer med ÅÅÅÅMMDD för att boka plats:");
         int personnummer = t.nextInt();
@@ -56,19 +56,12 @@ public class App {
                 int pris = 0;
                 System.out.print("Ange ålder i siffror: ");
                 int ålder = t.nextInt();
-
-                if (ålder < 18) 
-                {
+                listaPerson(ålder, personnummer);
+                if (ålder < 18) {
                     pris = 150;
-                } 
-                
-                else if (ålder >= 18) 
-                {
+                } else if (ålder >= 18) {
                     pris = 300;
-                }
-
-                 else 
-                {
+                } else {
                     System.out.println("Felaktig inmatning! Ange ålder i siffror.");
                 }
                 System.out.println("Pris: " + pris);
@@ -80,46 +73,49 @@ public class App {
         }
     }
 
-    public static void HittaBokning(int[] platser) {
+    public static void hittaBokning(int[] platser) {
         //logik för att hitta en bokning här
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer för att hitta bokning:");
         int personnummer = t.nextInt();
-        boolean BokningHittad = false; //Bokningen är inte hittat föränns persnr finns i listan
-    
+        boolean bokningHittad = false; //Bokningen är inte hittat föränns persnr finns i listan
+
         for (int i = 0; i < platser.length; i++) {
             if (platser[i] == personnummer) {
                 System.out.println("Personen med personnummer " + personnummer + " är bokad på plats " + (i + 1));
-                BokningHittad = true;
+                bokningHittad = true;
                 break;
             }
         }
-    
+
         //Om bokningen är falskt (inte hittad)
-        if (!BokningHittad)  {
+        if (!bokningHittad) {
             System.out.println("Ingen bokning hittades för personnummer " + personnummer);
-        }   
-        
+        }
     }
 
-    public static void AvbokaBokning(int[] platser) {
+    public static void avbokaBokning(int[] platser) {
         //logik för att avboka en bokning här
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer för att avboka bokning:");
         int personnummer = t.nextInt();
-        boolean BokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
+        boolean bokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
 
         for (int i = 0; i < platser.length; i++) {
             if (platser[i] == personnummer) { // Om personnumret matchar en bokning
                 platser[i] = 0; // Markera platsen som ledig genom att tilldela 0
                 System.out.println("Bokningen för personnummer " + personnummer + " har avbokats från plats " + (i + 1));
-                BokningHittad = true;
+                bokningHittad = true;
                 break; // Avsluta sökningen när bokningen har avbokats
             }
         }
 
-        if (!BokningHittad) { // Om ingen bokning hittades för det angivna personnumret
+        if (!bokningHittad) { // Om ingen bokning hittades för det angivna personnumret
             System.out.println("Ingen bokning hittades för personnummer " + personnummer);
         }
+    }
+
+    public static void listaPerson(int ålder, int personnummer) {
+        System.out.println("Personnummer:"+personnummer+"       Ålder:"+ålder);
     }
 }
