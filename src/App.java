@@ -11,34 +11,35 @@ public class App {
         Scanner t = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Välkommen till Noahs bussresa! Välj mellan 1-5:\n 1. Boka plats\n 2. Hitta bokning\n 3. Avboka bokning\n 4. Visa vinst \n5. Avsluta");
+            System.out.println("Välkommen till Noahs bussresa! Välj mellan 1-5:\n 1. Boka plats\n 2. Hitta bokning\n 3. Avboka bokning\n 4. Visa vinst \n 5. Avsluta");
 
             int val = t.nextInt();
             switch (val) {
                 case 1:
-                    totalPris += bokaPlats(platser);
+                    bokaPlats(platser);
                     break;
                 case 2:
                     hittaBokning(platser);
                     break;
                 case 3:
-                    avbokaBokning(platser);
-
+                    totalPris -= avbokaBokning(platser);
+                    System.out.println("Platsen har avbokats. Det totala priset har justerats till: " + totalPris + "kr");
                     break;
                 case 4:
+                    totalPris = visa_vinst(platser); // Beräkna vinsten baserat på bokade platser
                     System.out.println("Det totala priset för bokningarna är: " + totalPris + "kr");
                     break;
                 case 5:
-                System.out.println("Tack för besöket!");
-                return;
+                    System.out.println("Tack för besöket!");
+                    return;
 
                 default:
-                    System.out.println("Felaktigt val. Vänligen välj mellan 1-4.");
+                    System.out.println("Felaktigt val. Vänligen välj mellan 1-5.");
             }
         }
     }
 
-    public static int bokaPlats(int[] platser) {
+    public static void bokaPlats(int[] platser) {
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer med ÅÅÅÅMMDD för att boka plats:");
         int personnummer = t.nextInt();
@@ -56,6 +57,7 @@ public class App {
             if (säte >= 1 && säte <= platser.length && platser[säte - 1] == 0) {
                 platser[säte - 1] = personnummer; // Boka platsen med personnumret
                 System.out.println("Plats " + säte + " har bokats för personnummer: " + personnummer);
+                return;
             } 
             else {
                 System.out.println("Ogiltigt eller upptaget säte. Försök igen.");
@@ -68,7 +70,7 @@ public class App {
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer för att hitta bokning:");
         int personnummer = t.nextInt();
-        boolean bokningHittad = false; //Bokningen är inte hittat föränns persnr finns i listan
+        boolean bokningHittad = false; //Bokningen är inte hittad föränns persnr finns i listan
 
         for (int i = 0; i < platser.length; i++) {
             if (platser[i] == personnummer) {
@@ -84,20 +86,25 @@ public class App {
         }
     }
 
-    public static void avbokaBokning(int[] platser) {
+    public static int avbokaBokning(int[] platser) {
         //logik för att avboka en bokning här
         Scanner t = new Scanner(System.in);
         System.out.print("Ange personnummer för att avboka bokning:");
         int personnummer = t.nextInt();
         boolean bokningHittad = false; // Variabel för att hålla reda på om bokningen hittades
+        int vinst = 0;
 
         for (int i = 0; i < platser.length; i++) {
             if (platser[i] == personnummer) { // Om personnumret matchar en bokning
+                int ålder = 2024 - (personnummer / 10000); // Beräkna ålder baserat på personnumret
+                if (ålder > 17) {
+                    vinst = 300; 
+                } else {
+                    vinst = 150;
+                }
                 platser[i] = 0; // Markera platsen som ledig genom att tilldela 0
                 System.out.println("Bokningen för personnummer " + personnummer + " har avbokats från plats " + (i + 1));
-                // int pris=-;
                 bokningHittad = true;
-                
                 break; // Avsluta sökningen när bokningen har avbokats
             }
         }
@@ -105,20 +112,23 @@ public class App {
         if (!bokningHittad) { // Om ingen bokning hittades för det angivna personnumret
             System.out.println("Ingen bokning hittades för personnummer " + personnummer);
         }
+        return vinst;
     }
-    public static int visa_vinst(int[] platser, int personnummer) {
-        int vinst=0;
+    
+    
+    public static int visa_vinst(int[] platser) {
+        int totalVinst = 0;
         for (int i = 0; i < platser.length; i++) {
-            if (platser[i]!=0) {
-            int ålder=2024-(personnummer/10000);
-                if (ålder>17) {
-                    vinst=+300; 
-                }
-                else{
-                    vinst=+150;
+            if (platser[i] != 0) {
+                int personnummer = platser[i];
+                int ålder = 2024 - (personnummer / 10000); // Beräkna ålder baserat på personnumret
+                if (ålder > 17) {
+                    totalVinst += 300; 
+                } else {
+                    totalVinst += 150;
                 }
             }    
         }
-        return vinst;
-    }
+        return totalVinst;
+    }  
 }
